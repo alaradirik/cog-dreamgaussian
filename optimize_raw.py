@@ -175,8 +175,6 @@ class GUI:
                 # mask loss
                 mask = out["alpha"].unsqueeze(0) # [1, 1, H, W] in [0, 1]
                 loss = loss + 1000 * step_ratio * F.mse_loss(mask, self.input_mask_torch)
-            else:
-                print('input img is none')
 
             ### novel view (manual batch)
             render_resolution = 128 if step_ratio < 0.3 else (256 if step_ratio < 0.6 else 512)
@@ -348,12 +346,12 @@ class GUI:
     def save_model(self, mode='geo', texture_size=1024):
         os.makedirs(self.opt.outdir, exist_ok=True)
         if mode == 'geo':
-            path = os.path.join(self.opt.outdir, self.opt.save_path + '_mesh.ply')
+            path = os.path.join(self.opt.outdir, self.opt.save_path + '_raw.ply')
             mesh = self.renderer.gaussians.extract_mesh(path, self.opt.density_thresh)
             mesh.write_ply(path)
 
         elif mode == 'geo+tex':
-            path = os.path.join(self.opt.outdir, self.opt.save_path + '_mesh.obj')
+            path = os.path.join(self.opt.outdir, self.opt.save_path + '_raw.obj')
             mesh = self.renderer.gaussians.extract_mesh(path, self.opt.density_thresh)
 
             # perform texture extraction
@@ -474,7 +472,7 @@ class GUI:
             mesh.write(path)
 
         else:
-            path = os.path.join(self.opt.outdir, self.opt.save_path + '_model.ply')
+            path = os.path.join(self.opt.outdir, self.opt.save_path + '_raw.ply')
             self.renderer.gaussians.save_ply(path)
 
         print(f"[INFO] save model to {path}.")

@@ -656,7 +656,7 @@ if __name__ == "__main__":
 
     # auto find mesh from stage 1
     if opt.mesh is None:
-        default_path = os.path.join(opt.outdir, opt.save_path + '_mesh.obj')
+        default_path = os.path.join(opt.outdir, opt.save_path + '_raw.obj')
         if os.path.exists(default_path):
             opt.mesh = default_path
         else:

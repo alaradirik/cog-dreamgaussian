@@ -37,7 +37,6 @@ train_geo: False
 # prob to invert background color during training (0 = always black, 1 = always white)
 invert_bg_prob: 0.5
 
-
 ### GUI
 gui: False
 force_cuda_rast: False
